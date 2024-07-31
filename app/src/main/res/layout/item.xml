@@ -16,10 +16,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/iv_item"
+            android:id="@+id/iv_itemImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/item1" />
+            android:src="@drawable/sample1" />
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -76,7 +76,7 @@
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:scaleType="fitXY"
-            android:src="@drawable/comment" />
+            android:src="@drawable/ic_comment" />
 
         <TextView
             android:id="@+id/tv_commentCnt"
@@ -87,11 +87,12 @@
             android:text="32" />
 
         <ImageView
+            android:id="@+id/iv_like"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_marginStart="8dp"
             android:scaleType="fitXY"
-            android:src="@drawable/like" />
+            android:src="@drawable/ic_like_border" />
 
         <TextView
             android:id="@+id/tv_likeCnt"

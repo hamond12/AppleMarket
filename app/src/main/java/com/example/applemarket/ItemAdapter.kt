@@ -1,10 +1,9 @@
-package com.android.customitemview
+package com.example.applemarket
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.android.customitemview.model.Item
 import com.example.applemarket.databinding.ItemBinding
 import java.text.DecimalFormat
 
@@ -14,7 +13,12 @@ class ItemAdapter(private val mItems: MutableList<Item>) : RecyclerView.Adapter<
         fun onClick(view : View, position : Int)
     }
 
+    interface ItemLongClick {
+        fun onLongClick(view : View, position : Int)
+    }
+
     var itemClick : ItemClick? = null
+    var itemLongClick : ItemLongClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,15 +31,23 @@ class ItemAdapter(private val mItems: MutableList<Item>) : RecyclerView.Adapter<
             itemClick?.onClick(it, position)
         }
 
-        holder.itemImageView.setImageResource(mItems[position].Image)
+        holder.itemView.setOnLongClickListener() OnLongClickListener@{
+            itemLongClick?.onLongClick(it, position)
+            return@OnLongClickListener true
+        }
+
+        holder.ivItemImg.setImageResource(mItems[position].Image)
         holder.tvItemTitle.text = mItems[position].ItemTitle
         holder.tvAddress.text = mItems[position].Address
 
         val price = mItems[position].Price
         holder.tvPrice.text = DecimalFormat("#,###").format(price)+"원"
 
-        holder.tvItemComment.text = mItems[position].CommentCnt.toString()
-        holder.tvItemLike.text = mItems[position].LikeCnt.toString()
+        holder.tvCommentCnt.text = mItems[position].CommentCnt.toString()
+        holder.tvLikeCnt.text = mItems[position].LikeCnt.toString()
+
+        if(mItems[position].isLike) holder.ivLike.setImageResource(R.drawable.ic_like_filled)
+        else holder.ivLike.setImageResource(R.drawable.ic_like_border)
     }
 
     override fun getItemId(position: Int): Long {
@@ -47,11 +59,12 @@ class ItemAdapter(private val mItems: MutableList<Item>) : RecyclerView.Adapter<
     }
 
     inner class Holder(binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        val itemImageView = binding.ivItem
+        val ivItemImg = binding.ivItemImg
         val tvItemTitle = binding.tvItemTitle
         val tvAddress = binding.tvAddress
         val tvPrice = binding.tvPrice
-        val tvItemComment = binding.tvCommentCnt
-        val tvItemLike = binding.tvLikeCnt
+        val tvCommentCnt = binding.tvCommentCnt
+        val tvLikeCnt = binding.tvLikeCnt
+        val ivLike = binding.ivLike
     }
 }

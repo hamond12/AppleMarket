@@ -1,4 +1,4 @@
-package com.android.customitemview.model
+package com.example.applemarket
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -13,4 +13,5 @@ data class Item(
     val Address: String,
     var LikeCnt: Int,
     val CommentCnt: Int,
+    var isLike: Boolean
 )  : Parcelable
